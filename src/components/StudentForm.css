@@ -1,0 +1,75 @@
+.student-form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  .student-form,
+  .csv-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .student-form input,
+  .csv-upload input {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text-color);
+  }
+  
+  button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: var(--btn-bg);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background-color: var(--btn-hover);
+  }
+  
+  .message {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+  
+  .divider {
+    margin: 2rem 0;
+    border: none;
+    border-top: 2px dashed var(--divider-color);
+  }
+  
+  /* Light/Dark Theme Support */
+  :root {
+    --bg-color: #ffffff;
+    --text-color: #222;
+    --input-bg: #f5f5f5;
+    --input-border: #ccc;
+    --btn-bg: #4CAF50;
+    --btn-hover: #45a049;
+    --divider-color: #ddd;
+  }
+  
+  [data-theme='dark'] {
+    --bg-color: #1e1e1e;
+    --text-color: #f0f0f0;
+    --input-bg: #333;
+    --input-border: #555;
+    --btn-bg: #4CAF50;
+    --btn-hover: #367c39;
+    --divider-color: #444;
+  }
+  

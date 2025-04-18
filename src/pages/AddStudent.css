@@ -1,0 +1,64 @@
+.add-student-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
+  .add-student-card {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 450px;
+  }
+  
+  .form-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #1976d2;
+  }
+  
+  .add-student-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-student-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .add-student-form input {
+    margin-bottom: 20px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .add-student-form button {
+    padding: 10px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .add-student-form button:hover {
+    background-color: #0d47a1;
+  }
+  
+  .success-msg {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 500;
+    color: green;
+  }
+  
