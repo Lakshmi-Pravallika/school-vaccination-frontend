@@ -1,50 +1,48 @@
-// src/components/Login.js
+// src/components/Signup.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-function Login({ setAuth }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+function Signup() {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    email: '',
+    contact: '',
+  });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSignup = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
     try {
-      const response = await axios.post('http://localhost:8081/api/auth/login', {
-        username,
-        password,
-      });
-
-      if (response.data === 'Authentication successful') {
-        alert('✅ Login successful!');
-        setAuth(true);
-        navigate('/dashboard');
-      } else {
-        setError('❌ Invalid username or password');
-      }
+      const response = await axios.post('http://localhost:8081/api/auth/signup', formData);
+      setSuccess(response.data); // assuming it returns "Signup successful"
+      setTimeout(() => navigate('/'), 2000); // redirect to login after 2 seconds
     } catch (err) {
-      if (err.response?.status === 401 || err.response?.status === 400) {
-        setError('❌ Invalid username or password');
-      } else {
-        setError('⚠️ Something went wrong. Please try again later.');
-      }
+      setError(err.response?.data || 'Signup failed. Please try again.');
     }
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h2 style={styles.title}>Login</h2>
-        <form onSubmit={handleLogin} style={styles.form}>
+        <h2 style={styles.title}>Signup</h2>
+        <form onSubmit={handleSignup} style={styles.form}>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Username:</label>
             <input
               style={styles.input}
-              value={username}
-              onChange={e => setUsername(e.target.value)}
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
               required
             />
           </div>
@@ -53,16 +51,40 @@ function Login({ setAuth }) {
             <input
               style={styles.input}
               type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               required
             />
           </div>
-          <button type="submit" style={styles.button}>Login</button>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Email:</label>
+            <input
+              style={styles.input}
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Contact:</label>
+            <input
+              style={styles.input}
+              type="text"
+              name="contact"
+              value={formData.contact}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" style={styles.button}>Signup</button>
           {error && <p style={styles.error}>{error}</p>}
+          {success && <p style={styles.success}>{success}</p>}
         </form>
-        <p style={styles.signupLink}>
-          Not a user? <Link to="/signup">Signup</Link>
+        <p style={styles.loginLink}>
+          Already a user? <Link to="/">Login</Link>
         </p>
       </div>
     </div>
@@ -123,7 +145,12 @@ const styles = {
     marginTop: '1rem',
     textAlign: 'center',
   },
-  signupLink: {
+  success: {
+    color: 'green',
+    marginTop: '1rem',
+    textAlign: 'center',
+  },
+  loginLink: {
     marginTop: '1rem',
     textAlign: 'center',
     fontSize: '0.9rem',
@@ -131,4 +158,4 @@ const styles = {
   },
 };
 
-export default Login;
+export default Signup;

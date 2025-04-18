@@ -11,16 +11,13 @@ const Sidebar = () => {
           <Link to="/students">Add Student Details</Link>
         </li>
         <li>
-          <Link to="/students">Bulk Upload Student Details</Link>
+          <Link to="/viewEditDrive">View/Edit Drive</Link>
         </li>
         <li>
-          <Link to="/students">Update Student Details</Link>
+          <Link to="/registerStudentForDrive">Register student for drive</Link>
         </li>
         <li>
-          <Link to="/students">Register student for drive</Link>
-        </li>
-        <li>
-          <Link to="/students">Display all students</Link>
+          <Link to="/bookDrive">Create Vaccination Drive</Link>
         </li>
         <li>
           <Link to="/vaccination-status">Update Vaccination Status</Link>
