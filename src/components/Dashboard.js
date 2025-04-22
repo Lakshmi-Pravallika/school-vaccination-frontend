@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import Sidebar from './Sidebar'; // Import Sidebar component
-import './Dashboard.css'; // Add custom styles for Dashboard
+import Sidebar from './Sidebar'; 
+import './Dashboard.css';
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState({
@@ -12,7 +12,7 @@ const Dashboard = () => {
     upcomingDrives: [],
   });
   const [darkMode, setDarkMode] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // Set this to false
+  const [menuOpen, setMenuOpen] = useState(false); 
 
   useEffect(() => {
     axios

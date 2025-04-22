@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './BookDrive.css';
+import './CreateDrive.css';
 
 const BookDrive = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ const BookDrive = () => {
 
     try {
       const res = await axios.post('http://localhost:8081/api/status/drives', driveData);
-      setMessage('✅ Vaccination drive booked successfully!');
+      setMessage('✔ Vaccination drive created successfully!');
       setFormData({
         driveId: '',
         vaccineName: '',
@@ -40,14 +40,14 @@ const BookDrive = () => {
         const errorMsg =
         err.response && err.response.data
           ? `❌ ${err.response.data}`
-          : '❌ Failed to book drive. Please try again.';
+          : '❌ Failed to create drive. Please try again.';
       setMessage(errorMsg);
     }
   };
 
   return (
     <div className="book-drive-container">
-      <h2>💉 Book Vaccination Drive</h2>
+      <h2> Create Vaccination Drive</h2>
       {message && <p className="form-message">{message}</p>}
 
       <form className="drive-form" onSubmit={handleSubmit}>
@@ -68,7 +68,7 @@ const BookDrive = () => {
           <input type="number" name="availableDoses" value={formData.availableDoses} onChange={handleChange} required />
         </label>
        
-        <button type="submit">Book Drive</button>
+        <button type="submit">Create Drive</button>
       </form>
     </div>
   );

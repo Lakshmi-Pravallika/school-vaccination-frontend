@@ -1,8 +1,8 @@
-// Layout.js
+
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
-import './Layout.css'; // Optional styling
+import './Layout.css'; 
 
 const Layout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);

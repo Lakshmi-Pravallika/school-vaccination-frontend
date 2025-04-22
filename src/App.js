@@ -6,7 +6,7 @@ import Dashboard from './components/Dashboard';
 import StudentForm from './components/StudentForm'; // Adjust path if needed
 import AddStudent from './pages/AddStudent';
 import GenerateReport from './pages/GenerateReport';
-import BookDrive from './pages/BookDrive';
+import BookDrive from './pages/CreateDrive';
 import ViewEditDrive from './pages/ViewEditDrive';
 import RegisterStudentForDrive from './pages/RegisterStudentForDrive';
 import UpdateVaccinationStatus from './pages/UpdateVaccinationStatus';
@@ -34,7 +34,7 @@ function App() {
            
              <Route path="/students" element={<AddStudent />} />
              <Route path="/generate-reports" element={<GenerateReport />} />
-             <Route path="/bookDrive" element={<BookDrive />} />
+             <Route path="/createDrive" element={<BookDrive />} />
              <Route path="/viewEditDrive" element={<ViewEditDrive />} />
              <Route path="/registerStudentForDrive" element={<RegisterStudentForDrive />} />
              <Route path="/vaccination-status" element={<UpdateVaccinationStatus />} />

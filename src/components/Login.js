@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -19,7 +18,7 @@ function Login({ setAuth }) {
       });
 
       if (response.data === 'Authentication successful') {
-        alert('✅ Login successful!');
+        alert('✔ Login successful!');
         setAuth(true);
         navigate('/dashboard');
       } else {
@@ -29,7 +28,7 @@ function Login({ setAuth }) {
       if (err.response?.status === 401 || err.response?.status === 400) {
         setError('❌ Invalid username or password');
       } else {
-        setError('⚠️ Something went wrong. Please try again later.');
+        setError('⚠ Something went wrong. Please try again later.');
       }
     }
   };

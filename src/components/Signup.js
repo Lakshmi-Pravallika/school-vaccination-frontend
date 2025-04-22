@@ -1,4 +1,3 @@
-// src/components/Signup.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -24,8 +23,8 @@ function Signup() {
     setSuccess('');
     try {
       const response = await axios.post('http://localhost:8081/api/auth/signup', formData);
-      setSuccess(response.data); // assuming it returns "Signup successful"
-      setTimeout(() => navigate('/'), 2000); // redirect to login after 2 seconds
+      setSuccess(response.data); 
+      setTimeout(() => navigate('/'), 5000); 
     } catch (err) {
       setError(err.response?.data || 'Signup failed. Please try again.');
     }

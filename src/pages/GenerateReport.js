@@ -91,7 +91,7 @@ const GenerateReport = () => {
       <tr><td colSpan="6">No records found.</td></tr>
     ) : (
       reportData.map((student, index) => {
-        const status = student.vaccinationStatuses?.[0]; // Get first status if exists
+        const status = student.vaccinationStatuses?.[0]; 
         return (
           <tr key={index}>
             <td>{student.name}</td>

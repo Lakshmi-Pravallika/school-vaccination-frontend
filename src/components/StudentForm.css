@@ -52,7 +52,7 @@
     border-top: 2px dashed var(--divider-color);
   }
   
-  /* Light/Dark Theme Support */
+  
   :root {
     --bg-color: #ffffff;
     --text-color: #222;

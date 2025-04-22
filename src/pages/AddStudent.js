@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './AddStudent.css'; // Ensure this file exists
+import './AddStudent.css'; 
 
 const AddStudent = () => {
   const [formData, setFormData] = useState({ name: '', studentClass: '', studentId: '' });
@@ -8,17 +8,17 @@ const AddStudent = () => {
   const [csvFile, setCsvFile] = useState(null);
   const [bulkSuccess, setBulkSuccess] = useState('');
 
-  // For form input
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // For CSV file input
+  
   const handleFileChange = (e) => {
     setCsvFile(e.target.files[0]);
   };
 
-  // Submit individual student
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -31,7 +31,6 @@ const AddStudent = () => {
     }
   };
 
-  // Submit bulk upload
   const handleCsvUpload = async (e) => {
     e.preventDefault();
     if (!csvFile) {
@@ -46,7 +45,7 @@ const AddStudent = () => {
       await axios.post('http://localhost:8081/api/status/students/bulk-upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      setBulkSuccess('✅ Bulk upload successful!');
+      setBulkSuccess(' ✔ Bulk upload successful!');
       setCsvFile(null);
     } catch (error) {
       console.error(error);

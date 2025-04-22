@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './UpdateVaccinationStatus.css'; // Make sure to import the updated CSS
+import './UpdateVaccinationStatus.css';
 
 const UpdateVaccinationStatus = () => {
   const [students, setStudents] = useState([]);
-  const [vaccinated, setVaccinated] = useState(true);
   const [responseMessage, setResponseMessage] = useState('');
 
   useEffect(() => {
@@ -21,10 +20,10 @@ const UpdateVaccinationStatus = () => {
   const handleVaccinationStatusUpdate = (studentId, driveId) => {
     axios
       .put(
-        `http://localhost:8081/api/status/students/${studentId}/vaccination/${driveId}?vaccinated=${vaccinated}`
+        `http://localhost:8081/api/status/students/${studentId}/vaccination/${driveId}?vaccinated=true`
       )
       .then(() => {
-        setResponseMessage('✅ Vaccination status updated successfully!');
+        setResponseMessage('✔ Vaccination status updated successfully!');
         setStudents((prevStudents) =>
           prevStudents.map((student) =>
             student.studentId === studentId
@@ -61,20 +60,25 @@ const UpdateVaccinationStatus = () => {
             <h3>{student.name}</h3>
             <p><strong>ID:</strong> {student.studentId}</p>
             <p><strong>Class:</strong> {student.studentClass}</p>
-            <p>
-              <strong>Status:</strong>{' '}
-              {student.vaccinationStatuses.some((status) => status.vaccinated)
-                ? '✅ Vaccinated'
-                : '❌ Not Vaccinated'}
-            </p>
-            <button
-              disabled={student.vaccinationStatuses.some((status) => status.vaccinated)}
-              onClick={() => handleVaccinationStatusUpdate(student.studentId, 'drive001')}
-            >
-              {student.vaccinationStatuses.some((status) => status.vaccinated)
-                ? 'Already Vaccinated'
-                : 'Mark as Vaccinated'}
-            </button>
+
+            <p><strong>Vaccinations:</strong></p>
+            <ul>
+              {student.vaccinationStatuses.map((status, index) => (
+                <li key={index}>
+                  💉 <strong>{status.vaccineName}</strong> | {status.driveId}
+                  <div>
+                    <strong>Status:</strong>{' '}
+                    {status.vaccinated ? '✔ Vaccinated' : '❌ Not Vaccinated'}
+                  </div>
+                  <button
+                    disabled={status.vaccinated}
+                    onClick={() => handleVaccinationStatusUpdate(student.studentId, status.driveId)}
+                  >
+                    {status.vaccinated ? 'Already Vaccinated' : 'Mark as Vaccinated'}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
