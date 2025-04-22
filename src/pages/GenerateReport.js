@@ -3,7 +3,7 @@ import axios from 'axios';
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable'; 
+import autoTable from 'jspdf-autotable';
 
 import './GenerateReport.css';
 
@@ -29,8 +29,22 @@ const GenerateReport = () => {
     fetchReport(currentPage, vaccineFilter);
   }, [currentPage, vaccineFilter]);
 
+  const flattenData = () => {
+    return reportData.flatMap((student) =>
+      student.vaccinationStatuses.map((status) => ({
+        name: student.name,
+        studentId: student.studentId,
+        studentClass: student.studentClass,
+        vaccineName: status.vaccineName,
+        vaccinated: status.vaccinated ? 'Yes' : 'No',
+        dateOfVaccination: status.dateOfVaccination || '-',
+      }))
+    );
+  };
+
   const handleExportCSV = () => {
-    const worksheet = XLSX.utils.json_to_sheet(reportData);
+    const flatData = flattenData();
+    const worksheet = XLSX.utils.json_to_sheet(flatData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Report');
     const excelBuffer = XLSX.write(workbook, { bookType: 'csv', type: 'array' });
@@ -39,25 +53,27 @@ const GenerateReport = () => {
   };
 
   const handleExportExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(reportData);
+    const flatData = flattenData();
+    const worksheet = XLSX.utils.json_to_sheet(flatData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Report');
     XLSX.writeFile(workbook, 'Vaccination_Report.xlsx');
   };
 
   const handleExportPDF = () => {
+    const flatData = flattenData();
     const doc = new jsPDF();
     const tableColumn = ['Name', 'Student ID', 'Class', 'Vaccine', 'Status', 'Date'];
-    const tableRows = reportData.map(student => [
-      student.name,
-      student.studentId,
-      student.studentClass,
-      student.vaccineName,
-      student.vaccinated ? 'Yes' : 'No',
-      student.dateOfVaccination,
+    const tableRows = flatData.map(row => [
+      row.name,
+      row.studentId,
+      row.studentClass,
+      row.vaccineName,
+      row.vaccinated,
+      row.dateOfVaccination,
     ]);
     doc.text('Vaccination Report', 14, 15);
-    doc.autoTable({ startY: 20, head: [tableColumn], body: tableRows });
+    autoTable(doc, { startY: 20, head: [tableColumn], body: tableRows });
     doc.save('Vaccination_Report.pdf');
   };
 
@@ -76,37 +92,35 @@ const GenerateReport = () => {
       </div>
 
       <table className="report-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Student ID</th>
-      <th>Class</th>
-      <th>Vaccine Name</th>
-      <th>Status</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    {reportData.length === 0 ? (
-      <tr><td colSpan="6">No records found.</td></tr>
-    ) : (
-      reportData.map((student, index) => {
-        const status = student.vaccinationStatuses?.[0]; 
-        return (
-          <tr key={index}>
-            <td>{student.name}</td>
-            <td>{student.studentId}</td>
-            <td>{student.studentClass}</td>
-            <td>{status?.vaccineName || '-'}</td>
-            <td>{status?.vaccinated ? 'Yes' : 'No'}</td>
-            <td>{status?.dateOfVaccination || '-'}</td>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Student ID</th>
+            <th>Class</th>
+            <th>Vaccine Name</th>
+            <th>Status</th>
+            <th>Date</th>
           </tr>
-        );
-      })
-    )}
-  </tbody>
-</table>
-
+        </thead>
+        <tbody>
+          {reportData.length === 0 ? (
+            <tr><td colSpan="6">No records found.</td></tr>
+          ) : (
+            reportData.flatMap((student, index) =>
+              student.vaccinationStatuses.map((status, idx) => (
+                <tr key={`${index}-${idx}`}>
+                  <td>{student.name}</td>
+                  <td>{student.studentId}</td>
+                  <td>{student.studentClass}</td>
+                  <td>{status.vaccineName}</td>
+                  <td>{status.vaccinated ? 'Yes' : 'No'}</td>
+                  <td>{status.dateOfVaccination || '-'}</td>
+                </tr>
+              ))
+            )
+          )}
+        </tbody>
+      </table>
 
       <div className="pagination">
         <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1}>Prev</button>
