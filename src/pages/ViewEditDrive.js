@@ -37,7 +37,7 @@ const ViewEditDrive = () => {
         ...editForm,
         availableDoses: parseInt(editForm.availableDoses),
       });
-      setMessage('✅ Drive updated successfully.');
+      setMessage('✔ Drive updated successfully.');
       setEditingDriveId(null);
       fetchDrives();
     } catch (err) {

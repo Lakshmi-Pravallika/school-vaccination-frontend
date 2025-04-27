@@ -10,6 +10,7 @@ const UpdateVaccinationStatus = () => {
     axios
       .get('http://localhost:8081/api/status/driveRegisteredStudents')
       .then((response) => {
+        console.log(response);
         setStudents(response.data);
       })
       .catch((error) => {
@@ -17,10 +18,10 @@ const UpdateVaccinationStatus = () => {
       });
   }, []);
 
-  const handleVaccinationStatusUpdate = (studentId, driveId) => {
+  const handleVaccinationStatusUpdate = (studentId, driveId, dateOfVaccination) => {
     axios
       .put(
-        `http://localhost:8081/api/status/students/${studentId}/vaccination/${driveId}?vaccinated=true`
+        `http://localhost:8081/api/status/students/${studentId}/vaccination/${driveId}?vaccinated=true&date=${dateOfVaccination}`
       )
       .then(() => {
         setResponseMessage('✔ Vaccination status updated successfully!');
@@ -34,7 +35,7 @@ const UpdateVaccinationStatus = () => {
                       ? {
                           ...status,
                           vaccinated: true,
-                          dateOfVaccination: new Date().toISOString().split('T')[0],
+                          //dateOfVaccination: new Date().toISOString().split('T')[0],
                         }
                       : status
                   ),
@@ -70,9 +71,13 @@ const UpdateVaccinationStatus = () => {
                     <strong>Status:</strong>{' '}
                     {status.vaccinated ? '✔ Vaccinated' : '❌ Not Vaccinated'}
                   </div>
+                  <div>
+                    <strong>Drive Date:</strong>{' '}
+                    {status.dateOfVaccination}
+                  </div>
                   <button
                     disabled={status.vaccinated}
-                    onClick={() => handleVaccinationStatusUpdate(student.studentId, status.driveId)}
+                    onClick={() => handleVaccinationStatusUpdate(student.studentId, status.driveId, status.dateOfVaccination)}
                   >
                     {status.vaccinated ? 'Already Vaccinated' : 'Mark as Vaccinated'}
                   </button>

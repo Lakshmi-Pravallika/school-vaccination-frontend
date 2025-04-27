@@ -10,6 +10,7 @@ const Dashboard = () => {
     vaccinatedStudents: 0,
     percentageVaccinated: 0,
     upcomingDrives: [],
+    driveRegisteredStudents: 0,
   });
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false); 
@@ -35,7 +36,7 @@ const Dashboard = () => {
   const theme = darkMode ? styles.dark : styles.light;
 
   const chartData = [
-    { name: 'Total', value: metrics.totalStudents },
+    { name: 'Registered Students', value: metrics.driveRegisteredStudents },
     { name: 'Vaccinated', value: metrics.vaccinatedStudents },
   ];
 
@@ -72,6 +73,10 @@ const Dashboard = () => {
           <div style={{ ...styles.card, ...theme.card }}>
             <h3 style={theme.text}>Total Students</h3>
             <p style={styles.number}>{metrics.totalStudents}</p>
+          </div>
+          <div style={{ ...styles.card, ...theme.card }}>
+            <h3 style={theme.text}>Registered Students</h3>
+            <p style={styles.number}>{metrics.driveRegisteredStudents}</p>
           </div>
           <div style={{ ...styles.card, ...theme.card }}>
             <h3 style={theme.text}>Vaccinated Students</h3>

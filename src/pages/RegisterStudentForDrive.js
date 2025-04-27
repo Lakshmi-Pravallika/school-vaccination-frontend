@@ -17,10 +17,29 @@ const RegisterStudentForDrive = () => {
       const response = await axios.post(
         `http://localhost:8081/api/status/${studentId}/register/${driveId}`
       );
-      setMessage(response.data);
+
+      // Check if backend sends { message: "..." } or plain string
+      const successMessage =
+        typeof response.data === 'string'
+          ? response.data
+          : response.data?.message || '✅ Registration successful.';
+
+      setMessage(successMessage);
+      setError(false);
     } catch (err) {
+      console.log('AXIOS ERROR:', err); // Debug
       setError(true);
-      setMessage('❌ Registration failed. Please try again.');
+
+      const backendMessage = err.response?.data;
+      const errorMessage =
+        typeof backendMessage === 'string'
+          ? backendMessage
+          : backendMessage?.message ||
+            err.message ||
+            '❌ Registration failed. Please try again.';
+
+      console.log('PARSED ERROR MESSAGE:', errorMessage); // Debug
+      setMessage(errorMessage);
     }
   };
 
